@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    .a {
+        color: red;
+    }
+</style>
+<body>
+
+<div id="app">
+    <h2>
+        <ul>
+            <li v-for="(l, index) in list" @click="changeColor(index)" :class="{a: showOrNot(index)}">{{l}}</li>
+        </ul>
+    </h2>
+    <p :style="{fontSize: bfz+'px'}">大</p>
+    <p :style="{fontSize: mfz+'px'}">中</p>
+    <p :style="{fontSize: sfz+'px'}">小</p>
+    <button @click="bigger">大大大大</button>
+    <button @click="smaller">小嘻嘻嘻</button>
+</div>
+
+<script src="vue.js"></script>
+<script>
+    let flag = true;
+    let app = new Vue({
+        el: "#app",
+        data: {
+            list: ['a1', 'a2', 'a3', 'b1', 'b2'],
+            tmp: '',
+            bfz: 100,
+            sfz: 50
+        },
+        methods: {
+            changeColor: function (index) {
+                this.tmp = index;
+            },
+            showOrNot: function (index) {
+                if (flag) {
+                    flag = false;
+                    return true;
+                } else {
+                    return index === this.tmp;
+                }
+            },
+            bigger: function () {
+                this.bfz++;
+            },
+            smaller: function () {
+                this.sfz--;
+            }
+        },
+        computed: {
+            mfz: function () {
+                return this.bfz - this.sfz;
+            }
+        }
+    });
+</script>
+</body>
+</html>
