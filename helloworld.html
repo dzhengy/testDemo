@@ -1,49 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <title>Title</title>
 </head>
 <body>
 
 <div id="app">
-    <h1>{{msg}}</h1>
-    <template v-if="count % 2 > 0">
-        <ul>
-            <li v-for="name in names" :title="name">{{name}}</li>
-        </ul>
-    </template>
-    <button @click="dosth">整活</button>
-    <button @click="dosth2">整活2</button>
-    <br/>
-    <h2>{{msg2}}</h2>
+  <h1>{{msg}}</h1>
+  <template v-if="count % 2 > 0">
+    <ul>
+      <li v-for="name in names" :title="name">{{name}}</li>
+    </ul>
+  </template>
+  <button @click="dosth">整活</button>
+  <button @click="dosth2">整活2</button>
+  <br/>
+  <h2>{{msg2}}</h2>
 </div>
 <script src="vue.js"></script>
 <script>
-    let flag = false;
-    let app = new Vue({
-        el: "#app",
-        data: {
-            msg: "hello",
-            names: ['zzh', '闸总', 'huangheilong'],
-            count: 0,
-            msg2: ""
-        },
-        methods: {
-            dosth: function () {
-                if (flag) {
-                    this.msg = '整挺好';
-                } else {
-                    this.msg = '不好';
-                }
-                flag = !flag;
-            },
-            dosth2: function () {
-                this.count++;
-                this.names.push("整" + this.count);
-            }
+  let flag = false;
+  let app = new Vue({
+    el: "#app",
+    data: {
+      msg: "hello",
+      names: ['zzh', '闸总', 'huangheilong'],
+      count: 0,
+      msg2: ""
+    },
+    methods: {
+      dosth: function () {
+        if (flag) {
+          this.msg = '整挺好';
+        } else {
+          this.msg = '不好';
         }
-    });
+        flag = !flag;
+      },
+      dosth2: function () {
+        this.count++;
+        this.names.push("整" + this.count);
+      }
+    }
+  });
 </script>
 </body>
 </html>
