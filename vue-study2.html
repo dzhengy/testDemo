@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<style>
+  .abc {
+    text-decoration-line: underline;
+  }
+</style>
+<body>
+
+<div id="app">
+  <input type="text" @keyUp="setAtt(this)">
+  <ul>
+    <li class="abc" v-for="(l, index) in monsterList" :key="l.id">
+      <p v-for="(value, key, i) in l" :key="l.id+key+value">
+        <span v-if="key != 'id'" @click="gotHit(key, value, index)">
+        {{index+1}}.{{i}}.{{key}}:{{value}}
+        </span>
+      </p>
+    </li>
+  </ul>
+</div>
+
+<script src="vue.js"></script>
+<script>
+  const app = new Vue({
+    el: "#app",
+    data: {
+      ifShow: true,
+      att: 0,
+      monsterList: [
+        {
+          id: '12415135',
+          name: 'Diablo',
+          hp: 40000,
+          def: 1000
+        },
+        {
+          id: '3258972hgjfdg',
+          name: 'XenoJiva',
+          hp: 100000,
+          def: 2000
+        },
+        {
+          id: 'dsfjhdsfasdkjf2e4',
+          name: 'Hunter',
+          hp: 999999999,
+          def: 99999999999
+        }
+      ]
+    },
+    methods: {
+      gotHit(key, value, index) {
+        let curDef = this.monsterList[index].def;
+        if(this.att > curDef){
+          this.monsterList[index].hp = this.monsterList[index].hp - this.att + curDef;
+          if (this.monsterList[index].hp < 0) {
+            this.monsterList[index].name += '(DEAD)';
+            this.monsterList[index].def.delete();
+            this.monsterList[index].hp.delete();
+          }
+        }
+      },
+      setAtt(value){
+        console.log(value);
+        this.att = value;
+      }
+    }
+  });
+</script>
+</body>
+</html>
