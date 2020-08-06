@@ -15,7 +15,9 @@
 <body>
 
 <div id="app">
-  <input type="text" v-model.number.lazy="att">
+  <label for="att">
+    <input type="text" v-model.number.lazy="att" id="att">
+  </label>
   <h3>ATT: {{att}}</h3>
   <ul>
     <li class="abc" v-for="(l, index) in monsterList" :key="l.id" :class="{dead: !l.hp}">
