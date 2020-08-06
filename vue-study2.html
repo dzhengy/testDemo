@@ -8,13 +8,17 @@
   .abc {
     text-decoration-line: underline;
   }
+  .dead {
+    color: red;
+  }
 </style>
 <body>
 
 <div id="app">
-  <input type="text" @keyUp="setAtt(this)">
+  <input type="text" v-model.number.lazy="att">
+  <h3>ATT: {{att}}</h3>
   <ul>
-    <li class="abc" v-for="(l, index) in monsterList" :key="l.id">
+    <li class="abc" v-for="(l, index) in monsterList" :key="l.id" :class="{dead: !l.hp}">
       <p v-for="(value, key, i) in l" :key="l.id+key+value">
         <span v-if="key != 'id'" @click="gotHit(key, value, index)">
         {{index+1}}.{{i}}.{{key}}:{{value}}
@@ -55,18 +59,14 @@
     methods: {
       gotHit(key, value, index) {
         let curDef = this.monsterList[index].def;
-        if(this.att > curDef){
+        if (this.att > curDef) {
           this.monsterList[index].hp = this.monsterList[index].hp - this.att + curDef;
           if (this.monsterList[index].hp < 0) {
             this.monsterList[index].name += '(DEAD)';
-            this.monsterList[index].def.delete();
-            this.monsterList[index].hp.delete();
+            delete this.monsterList[index].hp;
+            delete this.monsterList[index].def;
           }
         }
-      },
-      setAtt(value){
-        console.log(value);
-        this.att = value;
       }
     }
   });
