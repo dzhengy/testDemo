@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+  <cart :goods="books"
+        :total="totalPrice"
+        @plsclk="plsclk"
+        @mnsclk="mnsclk"></cart>
+</div>
+
+<template id="cart">
+  <div>
+    <table>
+      <thead>
+      <tr>
+        <td>序号</td>
+        <td>书籍名称</td>
+        <td>价格</td>
+        <td>数量</td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr v-for="(item, index) in goods" :key="item.id">
+        <td>{{index+1}}</td>
+        <td>{{item.name}}</td>
+        <td>{{item.price}}</td>
+        <td>
+          <button @click="minus(index)" :disabled="item.count === 1">-</button>
+          {{item.count}}
+          <button @click="plus(index)">+</button>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="4">总价： {{total}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<script src="vue.js"></script>
+<script>
+  const cart = {
+    template: '#cart',
+    props: {
+      goods: Array,
+      total: Number
+    },
+    methods: {
+      plus(i) {
+        this.$emit('plsclk', i);
+      },
+      minus(i) {
+        this.$emit('mnsclk', i)
+      }
+    }
+  }
+  const app = new Vue({
+    el: "#app",
+    data: {
+      books: [
+        {
+          id: 'sadfkalsdjf',
+          name: '计算机组成原理',
+          count: 1,
+          price: 73.6
+        },
+        {
+          id: 'gagdsgadsf',
+          name: '离散数学',
+          count: 1,
+          price: 55.2
+        },
+        {
+          id: '4334g3gregag',
+          name: '数据结构',
+          count: 1,
+          price: 54
+        },
+        {
+          id: '4tgfsdfaf',
+          name: '线性代数',
+          count: 1,
+          price: 33.2
+        },
+        {
+          id: 'asdgas32f2f',
+          name: '编译原理',
+          count: 1,
+          price: 110
+        },
+        {
+          id: 'hg43ghqagdaf',
+          name: 'Java从入门到放弃',
+          count: 1,
+          price: 200.5
+        }
+      ]
+    },
+    methods: {
+      plsclk(i) {
+        this.books[i].count++;
+      },
+      mnsclk(i) {
+        this.books[i].count--;
+      }
+    },
+    components: {
+      cart
+    },
+    computed: {
+      totalPrice() {
+        let t = this.books.reduce(function (prevVal, currVal) {
+          return prevVal + currVal.price * currVal.count;
+        }, 0).toFixed(2);
+        return parseFloat(t);
+      }
+    }
+  });
+</script>
+</body>
+</html>
